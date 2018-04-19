@@ -124,7 +124,6 @@ class MainActivity : AppCompatActivity() {
             }
             return false
         } else {
-            sendLocation()
             return true
         }
     }
@@ -164,6 +163,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupPusher() {
 
+        Log.e("TAG","Pusher setup")
         val options = PusherOptions()
         options.setCluster("eu")
         pusher = Pusher("9117088b176802bda36f", options)

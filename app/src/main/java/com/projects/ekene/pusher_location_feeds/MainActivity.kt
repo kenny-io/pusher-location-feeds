@@ -74,11 +74,14 @@ class MainActivity : AppCompatActivity() {
                         Client().getClient().sendLocation(body).enqueue(object: Callback<String> {
                             override fun onResponse(call: Call<String>, response: Response<String>) {
                                 Log.d("TAG-Response",response.body().toString())
+                                Log.d("TAG-Response",response.message().toString())
+                                Log.d("TAG-Response",response.code().toString())
+                                Log.d("TAG-Response",response.errorBody().toString())
 
                             }
 
-                            override fun onFailure(call: Call<String>?, t: Throwable?) {
-                                Log.e("TAG",t!!.message)
+                            override fun onFailure(call: Call<String>?, t: Throwable) {
+                                Log.e("TAG",t.message)
                             }
 
                         })
@@ -172,16 +175,25 @@ class MainActivity : AppCompatActivity() {
 
         channel.bind("location") { _, _, data ->
             val jsonObject = JSONObject(data)
-            Log.d("TAG",jsonObject.toString())
+            Log.d("TAG",data)
 
             val lat:Double = jsonObject.getString("latitude").toDouble()
             val lon:Double = jsonObject.getString("longitude").toDouble()
             val name:String = jsonObject.getString("username").toString()
 
+            /*if (!name.equals(intent.extras.get("username"))){
+                runOnUiThread {
+                    val model = Model(lat,lon,name)
+                    adapter.addItem(model)
+                }
+            }*/
+
             runOnUiThread {
                 val model = Model(lat,lon,name)
                 adapter.addItem(model)
             }
+
+
 
         }
 

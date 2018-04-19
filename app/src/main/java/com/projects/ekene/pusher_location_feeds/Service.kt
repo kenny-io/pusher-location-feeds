@@ -10,6 +10,6 @@ import retrofit2.http.Path
 
 interface Service {
 
-    @POST("/location")
+    @POST("location")
     fun sendLocation(@Body coordinates: RequestBody): Call<String>
 }

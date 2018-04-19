@@ -46,7 +46,6 @@ class Adapter(private val mContext: AppCompatActivity)
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var text: TextView = itemView.findViewById<View>(android.R.id.text1) as TextView
         val mapFragment = mContext.supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
 
     }

@@ -72,13 +72,7 @@ class MainActivity : AppCompatActivity() {
                         val body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString())
                         Log.e("TAG",jsonObject.toString())
                         Client().getClient().sendLocation(body).enqueue(object: Callback<String> {
-                            override fun onResponse(call: Call<String>, response: Response<String>) {
-                                Log.d("TAG-Response",response.body().toString())
-                                Log.d("TAG-Response",response.message().toString())
-                                Log.d("TAG-Response",response.code().toString())
-                                Log.d("TAG-Response",response.errorBody().toString())
-
-                            }
+                            override fun onResponse(call: Call<String>, response: Response<String>) {}
 
                             override fun onFailure(call: Call<String>?, t: Throwable) {
                                 Log.e("TAG",t.message)

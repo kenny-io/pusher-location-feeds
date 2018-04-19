@@ -2,13 +2,12 @@ package com.projects.ekene.pusher_location_feeds
 
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.TextView
-import com.google.android.gms.maps.*
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -48,8 +47,7 @@ class Adapter(private val mContext: AppCompatActivity)
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val mapView:MapView = itemView.findViewById(R.id.map)
-        //val mapFragment = mContext.supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        //val id = R.id.map
+
     }
 
     fun addItem(model: Model) {

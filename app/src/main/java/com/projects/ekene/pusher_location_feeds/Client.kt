@@ -10,7 +10,7 @@ class Client {
         val httpClient = OkHttpClient.Builder()
 
         val builder = Retrofit.Builder()
-                .baseUrl("https://wt-97b8897f620c6dc18f4ea6a53e0e0796-0.run.webtask.io/pusher-location-feeds")
+                .baseUrl("https://wt-25e341bb2fca3ab10c862fb71cda965c-0.run.webtask.io/pusher-location-feeds/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
 

@@ -1,53 +1,59 @@
 package com.projects.ekene.pusher_location_feeds
 
-import android.content.Context
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
 /**
  * Created by EKENE on 4/12/2018.
  */
-class Adapter (private val mContext: Context)
+class Adapter(private val mContext: AppCompatActivity)
     : RecyclerView.Adapter<Adapter.MyViewHolder>() {
 
-    private var arrayList: ArrayList<String> = ArrayList()
+    private var arrayList: ArrayList<Model> = ArrayList()
 
     override fun getItemCount(): Int {
-        TODO("not implemented")
         return arrayList.size
     }
 
     override fun onBindViewHolder(holder: Adapter.MyViewHolder, position: Int) {
-        TODO("not implemented")
-        holder.text.setText(arrayList.get(position))
+        val latLng = LatLng(arrayList[position].latitude,arrayList[position].longitude)
+        Log.e("TAG",arrayList[position].longitude.toString())
+        holder.mapFragment.getMapAsync(OnMapReadyCallback { map ->
+            map.addMarker(MarkerOptions()
+                    .title(arrayList[position].username)
+                    .position(latLng))
+
+            val cameraPosition = CameraPosition.Builder().target(latLng).zoom(17f).build()
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+
+        })
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MyViewHolder {
-        val view = LayoutInflater.from(mContext).inflate(android.R.layout.simple_list_item_1, parent, false)
+        val view = LayoutInflater.from(mContext).inflate(R.layout.custom_view, parent, false)
         return MyViewHolder(view)
-        TODO("not implemented")
     }
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
 
-            View.OnClickListener {
-        var text: TextView = itemView.findViewById<View>(android.R.id.text1) as
-                TextView
-        init {
-            itemView.setOnClickListener(this)
-        }
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var text: TextView = itemView.findViewById<View>(android.R.id.text1) as TextView
+        val mapFragment = mContext.supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
 
-        override fun onClick(view: View) {
-
-
-        }
     }
-    fun setList(arrayList: ArrayList<String>) {
-        this.arrayList = arrayList
+
+    fun addItem(model: Model) {
+        this.arrayList.add(model)
         notifyDataSetChanged()
     }
-
 
 }

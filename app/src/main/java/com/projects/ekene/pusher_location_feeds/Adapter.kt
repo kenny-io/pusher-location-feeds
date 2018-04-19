@@ -6,10 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.TextView
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -28,16 +27,18 @@ class Adapter(private val mContext: AppCompatActivity)
 
     override fun onBindViewHolder(holder: Adapter.MyViewHolder, position: Int) {
         val latLng = LatLng(arrayList[position].latitude,arrayList[position].longitude)
-        Log.e("TAG",arrayList[position].longitude.toString())
-        holder.mapFragment.getMapAsync(OnMapReadyCallback { map ->
-            map.addMarker(MarkerOptions()
+
+        holder.mapView.onCreate(null)
+        holder.mapView.getMapAsync(OnMapReadyCallback {
+            it.addMarker(MarkerOptions()
                     .title(arrayList[position].username)
                     .position(latLng))
 
             val cameraPosition = CameraPosition.Builder().target(latLng).zoom(17f).build()
-            map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+            it.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
 
         })
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MyViewHolder {
@@ -46,8 +47,9 @@ class Adapter(private val mContext: AppCompatActivity)
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val mapFragment = mContext.supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-
+        val mapView:MapView = itemView.findViewById(R.id.map)
+        //val mapFragment = mContext.supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        //val id = R.id.map
     }
 
     fun addItem(model: Model) {
